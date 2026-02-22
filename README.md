@@ -12,7 +12,7 @@
 | 🎨 **智能配色** | 从图片自动提取主色调，或根据"赛博朋克"、"清新自然"等风格描述生成配色方案 |
 | 🌓 **双模式支持** | 同时生成浅色和深色两套完整样式 |
 | 📦 **即用即走** | 生成约 700 行完整 CSS，复制粘贴即可使用 |
-| 🖼️ **背景图支持** | 可基于上传的图片生成主题，自动调整组件透明度 |
+| 🖼️ **背景图支持** | 在 AionUI 主题设置中上传背景图，自动适配 |
 | 🧠 **智能决策** | 快速判断单色/双色、圆角大小、特殊效果，并可选询问细节偏好 |
 | 🔄 **迭代调整** | 支持"再红一点"、"再亮一点"等量化调整 |
 | 📚 **高级技巧** | 支持毛玻璃、霓虹发光、像素边框等特殊效果 |
@@ -24,12 +24,16 @@
 
 **macOS / Linux:**
 ```bash
-git clone https://github.com/taekchef/AionUI-CSS-Theme-Generator---.git /tmp/css-theme-gen && mkdir -p ~/.aionui-config/skills && mv /tmp/css-theme-gen/css-theme-generator ~/.aionui-config/skills/ && rm -rf /tmp/css-theme-gen
+git clone https://github.com/taekchef/aionui-css-theme-generator.git /tmp/css-theme-gen && \
+cp -r /tmp/css-theme-gen/css-theme-generator ~/.aionui-config/skills/ && \
+rm -rf /tmp/css-theme-gen
 ```
 
 **Windows:**
 ```powershell
-git clone https://github.com/taekchef/AionUI-CSS-Theme-Generator---.git %TEMP%\css-theme-gen && if not exist "%USERPROFILE%\.aionui-config\skills" mkdir "%USERPROFILE%\.aionui-config\skills" && move /Y "%TEMP%\css-theme-gen\css-theme-generator" "%USERPROFILE%\.aionui-config\skills\" && rd /s /q "%TEMP%\css-theme-gen"
+git clone https://github.com/taekchef/aionui-css-theme-generator.git %TEMP%\css-theme-gen
+xcopy /E /I "%TEMP%\css-theme-gen\css-theme-generator" "%USERPROFILE%\.aionui-config\skills\"
+rmdir /s /q "%TEMP%\css-theme-gen"
 ```
 
 安装完成后，你可以选择以下两种使用方式：
@@ -112,8 +116,8 @@ git clone https://github.com/taekchef/AionUI-CSS-Theme-Generator---.git %TEMP%\c
 
 ## 依赖要求
 
-### 必需
-- **Python 3**：用于保存 CSS 文件（确保 UTF-8 BOM 编码）
+### 推荐
+- **Python 3**（可选）：用于保存 CSS 文件，确保 UTF-8 编码。也可以使用其他工具，只要确保 CSS 文件是 UTF-8 编码即可。
 
 ### 可选
 - **图像分析工具**：如果需要从图片提取颜色，需要以下任一工具：
@@ -142,12 +146,12 @@ git clone https://github.com/taekchef/AionUI-CSS-Theme-Generator---.git %TEMP%\c
 
 ### 3. 应用到 AionUI
 
-**重要**：如果是带背景图的主题，请按以下顺序操作：
+1. **打开主题设置**：AionUI → 设置 → 主题
+2. **添加主题**：点击"添加"或选择现有主题
+3. **粘贴 CSS**：在自定义 CSS 输入框中粘贴生成的 CSS 代码
+4. **上传背景图**（可选）：在主题设置中上传背景图片
 
-1. **先粘贴 CSS**：打开 AionUI → 设置 → 主题 → 自定义 CSS，粘贴 CSS 代码
-2. **再上传图片**：在主题设置中上传背景图片
-
-**原因**：AionUI 会将上传图片的 base64 数据注入到 CSS 中。如果顺序错了会导致背景图无法显示。
+**注意**：如果需要背景图，先粘贴 CSS，再上传图片。
 
 ## 技术细节
 
@@ -168,7 +172,7 @@ git clone https://github.com/taekchef/AionUI-CSS-Theme-Generator---.git %TEMP%\c
 
 ### 编码说明
 
-生成的 CSS 文件使用 **UTF-8 BOM 编码**，避免中文注释乱码。
+生成的 CSS 文件使用 **UTF-8 编码**，并在文件开头包含 `@charset "UTF-8";` 声明，确保中文注释正常显示。
 
 ## 常见问题
 
@@ -176,7 +180,7 @@ git clone https://github.com/taekchef/AionUI-CSS-Theme-Generator---.git %TEMP%\c
 A: 请确保按正确顺序操作：先粘贴 CSS，再上传图片。如果还是不行，重启 AionUI 后重试。
 
 **Q: 生成的 CSS 有中文乱码？**
-A: 确保使用 Python 的 `utf-8-sig` 编码保存文件。skill 已自动处理这个问题。
+A: 生成的 CSS 文件已包含 `@charset "UTF-8";` 声明，确保 UTF-8 编码即可正常显示。
 
 **Q: 可以自定义颜色吗？**
 A: 可以。生成的 CSS 是标准文本文件，你可以手动修改任何颜色值。

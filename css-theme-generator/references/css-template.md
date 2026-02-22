@@ -48,6 +48,7 @@
 ## CSS 模板
 
 ```css
+@charset "UTF-8";
 /* ========================================
    {{THEME_NAME}} - AionUI Theme
    {{THEME_STYLE_DESCRIPTION}}

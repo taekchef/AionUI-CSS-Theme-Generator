@@ -48,5 +48,6 @@
 
 - **颜色格式**：使用 hex（`#rrggbb`），需要透明度时用 `rgba()`
 - **不要省略**：每次都生成完整的 CSS，不要只生成部分变量
-- **背景图处理**：如果用户提供了背景图，在 CSS 末尾加上背景图注入块（`/* AionUi Theme Background Start/End */`），并在 `url("")` 中留空，提醒用户在 AionUI 主题设置里上传图片
+- **背景图处理**：本 skill 只生成配色 CSS，**不处理背景图**。AionUI 的背景图需要在主题设置中手动上传。当用户在 AionUI 主题编辑器中上传图片时，AionUI 会自动在 CSS 末尾追加背景图样式块。
 - **AionUI 兼容性**：使用 `data-theme` 属性而非 `prefers-color-scheme` 做暗色模式
+- **编码**：生成的 CSS 文件必须使用 UTF-8 编码，并在开头包含 `@charset "UTF-8";` 声明（css-template.md 模板已包含）

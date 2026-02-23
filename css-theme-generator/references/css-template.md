@@ -42,7 +42,7 @@
 | `{{D_TOOLTIP_BG}}` | 暗色 Tooltip 背景 | rgba(45,45,45,0.98) |
 | `{{D_ACCENT_RGB}}` | 暗色强调色 RGB | 76, 175, 80 |
 | `{{BG_IMAGE_URL}}` | 背景图 data URL 或空 | |
-
+| `{{ADVANCED_EFFECTS_CSS}}` | AI 自由发挥的高阶特效 CSS 代码块 | (自由发挥区) |
 ---
 
 ## CSS 模板
@@ -1182,5 +1182,16 @@ input[type="radio"]:checked::after {
     text-shadow: none !important;
   }
 }
+
+
+/* ==================== 高阶特效区 (AI 自由发挥) ==================== */
+/*
+  说明：以下区域为 `{{ADVANCED_EFFECTS_CSS}}` 占位符的内容。
+  当用户要求特定风格（如赛博朋克、毛玻璃、极简留白、复古 8bit 等）时，
+  AI 可以自由编写 CSS 规则覆盖上方基础样式。
+  例如：添加文本发光 (text-shadow)、复杂渐变背景 (linear-gradient)、
+  霓虹边框 (box-shadow)、毛玻璃模糊滤镜 (backdrop-filter) 等。
+*/
+{{ADVANCED_EFFECTS_CSS}}
 
 ```

@@ -39,13 +39,15 @@ AionUI 支持通过粘贴自定义 CSS 来改变整个界面的外观。本技�
 
 ### Step 3: Variable Derivation (变量推导)
 基于主色调推导全套 AionUI 变量（包括 `--bg-1`, `--text-primary`, `--accent` 等）。
-- 详细的推导逻辑请参考 `references/color-theory.md`。
+ 详细的推导逻辑请参考 `references/color-theory.md`。
+ **高级特权**：如果你判断用户需要"赛博朋克"、"玻璃拟物"等极具个性的风格，你拥有"越界特权"，可以打破基础亮度限制。
 
 ### Step 4: CSS Generation (生成代码)
 使用 AionUI 标准模板填充变量和样式。
 - 完整的 CSS 模板结构请参考 `references/css-template.md`。
 - 注意：AionUI 的 `customCssProcessor` 会自动为所有属性添加 `!important`，生成时无需手动添加。
-- **不要在 CSS 中写任何背景图相关的代码**。
+ **不要在 CSS 中写任何背景图相关的代码**。
+ **高阶特效槽**：模板最末尾提供了一个 `{{ADVANCED_EFFECTS_CSS}}` 占位符。如果你要实现发光、模糊、复杂渐变等高级风格，把那些覆盖用的高级 CSS 写在这个占位符里。
 
 ### Step 5: Save and Present (保存与交付)
 将生成的 CSS 代码写入本地 `.css` 文件，并向用户提供文件路径。

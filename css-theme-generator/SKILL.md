@@ -13,6 +13,13 @@ AionUI 支持通过粘贴自定义 CSS 来改变整个界面的外观。本技�
 
 ## Workflow (工作流)
 
+> ⚠️ **CRITICAL INSTRUCTION FOR AI AGENT (防偷懒警告)** ⚠️
+> 在你执行任何生成任务之前，你**必须**使用读取工具加载以下两个文件：
+> 1. `references/color-theory.md` (色彩推导逻辑)
+> 2. `references/css-template.md` (输出模板)
+> 绝对不要凭记忆捏造 CSS！绝对不要省略任何一行模板！你的输出必须精确匹配模板中的所有类名和结构，仅替换 `{{PLACEHOLDER}}`。如果你觉得输出可能会超长截断，宁可被截断，也不准自行简写或省略（用户会发送"继续"来补全）。
+
+
 ### Step 1: Understand User Request (理解需求)
 识别用户的核心需求：
 - **风格关键词**：如“赛博朋克”、“清新自然”、“暗黑哥特”、“复古未来”等。
@@ -80,10 +87,9 @@ with open(file_path, 'w', encoding='utf-8') as f:
 - **兼容性**：生成的 CSS 必须严格遵循 AionUI 的变量命名规范。
 - **双模式**：默认同时生成浅色（`:root`）和深色（`[data-theme='dark']`）两套完整样式。AionUI 使用 `data-theme` 属性切换明暗模式，不使用 `prefers-color-scheme` 媒体查询。
 - **背景图**：本 skill 不处理背景图，用户需要在 AionUI 主题设置中手动上传。
-- **参考文档**：
+- **必须读取的依赖文件**（不读取禁止输出）：
   - 完整 CSS 模板结构：`references/css-template.md`
   - 色彩推导方法论：`references/color-theory.md`
-
 ## Output Format (输出格式)
 
 1. **保存 CSS 文件**：将生成的 CSS 保存为 `~/Desktop/aion-theme-[style].css`（例如 `aion-theme-cyberpunk.css`），确保 UTF-8 编码。

@@ -244,7 +244,7 @@ html {
 
 .guidInputCard textarea,
 [class*="guidInputCard"] textarea {
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: var(--color-bg-2);
   color: var(--color-text-1);
 }
 
@@ -306,7 +306,7 @@ html {
 .message-item.ai .message-bubble,
 [class*="message"][class*="ai"] .message-content,
 [class*="message"][class*="assistant"] .message-content {
-  background-color: rgba(255, 255, 255, 0.98);
+  background-color: var(--color-bg-2);
   backdrop-filter: blur(4px);
   border: 1px solid {{BORDER_2}};
   border-radius: {{BORDER_RADIUS}};
@@ -1183,38 +1183,4 @@ input[type="radio"]:checked::after {
   }
 }
 
-/* AionUi Theme Background Start */
-body,
-html,
-.arco-layout,
-.app-shell {
-  background-image: url("{{BG_IMAGE_URL}}");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-color: transparent;
-}
-
-.layout-content,
-.layout-content.bg-1,
-.arco-layout-content,
-[class*="chat-layout"] .arco-layout-content,
-[class*="conversation"] .arco-layout-content,
-.bg-1,
-.bg-2:not(.app-titlebar),
-[class*="flex-col"][class*="h-full"],
-[class*="flex-center"] {
-  background-color: transparent;
-  background-image: none;
-}
-
-.layout-content::before,
-.layout-content.bg-1::before,
-[class*="chat-layout"] .arco-layout-content::before,
-[class*="conversation"] .arco-layout-content::before {
-  background: transparent;
-  opacity: 0;
-}
-/* AionUi Theme Background End */
 ```

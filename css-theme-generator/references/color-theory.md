@@ -138,3 +138,128 @@ AionUI 的核心色板 `AOU Brand Palette` 由 10 个阶梯组成（`--aou-1` �
    - 深色模式：`rgba(255, 255, 255, 0.12)`。
 4. **阴影处理**：
    - 深色模式下阴影应更深、扩散半径更小，或使用发光（Glow）效果代替。
+
+
+---
+
+
+## 9. 其他派生变量推导规则 (Other Derived Variable Rules)
+
+
+本节补充模板中出现但前面章节未覆盖的占位符的推导规则，防止 AI 生成时靠猜。
+
+
+### 9.1 侧边栏头部渐变色 SIDEBAR_HEADER_FROM / TO
+
+
+侧边栏顶部（`.layout-sider-header`）使用线性渐变，颜色应与主色协调。
+
+
+| 场景 | `{{SIDEBAR_HEADER_FROM}}` | `{{SIDEBAR_HEADER_TO}}` |
+| :--- | :--- | :--- |
+| 浅色模式（Light） | `--aou-6`（主色本身） | `--aou-8`（主色深 15%） |
+| 深色模式（Dark） | `hsl(H, S, 20%)` — 比深色主色再深 | `hsl(H, S, 15%)` — 更深 |
+
+
+**推导规则**：
+- Light: `{{SIDEBAR_HEADER_FROM}}` = `{{PRIMARY}}`，`{{SIDEBAR_HEADER_TO}}` = `{{PRIMARY_DARK_1}}`
+- Dark: `{{D_SIDEBAR_HEADER_FROM}}` = `hsl(H, S*0.8, 20%)`，`{{D_SIDEBAR_HEADER_TO}}` = `hsl(H, S*0.8, 14%)`
+- 若主色饱和度极低（< 10%），FROM/TO 可使用 `--aou-8` / `--aou-9`
+
+
+---
+
+
+### 9.2 内容区遮罩色 OVERLAY_LIGHT / OVERLAY_DARK
+
+
+`.layout-content.bg-1::before` 的渐变叠加层，给背景图增加色调统一感。无背景图时此层也存在，但几乎透明（opacity 接近 0）。
+
+
+**浅色模式 3 个锚点**：
+
+```
+{{OVERLAY_LIGHT_1}}  →  rgba(R, G, B, 0.03) — 极轻微主色遮罩（0° 端）
+{{OVERLAY_LIGHT_2}}  →  rgba(255, 255, 255, 0.0) — 中间透明过渡
+{{OVERLAY_LIGHT_3}}  →  rgba(R, G, B, 0.02) — 极轻微主色遮罩（135° 端）
+```
+
+其中 R,G,B 为主色（`{{PRIMARY}}`）的 RGB 分量。透明度保持在 0.02–0.05 之间，**不要超过 0.08**，否则会严重遮盖主题背景。
+
+
+**深色模式 3 个锚点**：
+
+```
+{{D_OVERLAY_DARK_1}}  →  rgba(R, G, B, 0.08) — 深色端轻微主色叠加
+{{D_OVERLAY_DARK_2}}  →  rgba(0, 0, 0, 0.0) — 中间透明
+{{D_OVERLAY_DARK_3}}  →  rgba(R, G, B, 0.05) — 另一端轻微主色叠加
+```
+
+其中 R,G,B 为深色主色（`{{D_PRIMARY}}`）的 RGB 分量。透明度保持在 0.05–0.12 之间。
+
+
+---
+
+
+### 9.3 填充色 FILL
+
+
+`--fill` / `--color-fill` 用于图标、标签等的填充色，介于背景和文字之间。
+
+
+| 模式 | 推导规则 |
+| :--- | :--- |
+| 浅色 `{{FILL}}` | `hsl(H, 10%, 80%)` — 比 `--color-bg-4` 稍深的中性调 |
+| 深色 `{{D_FILL}}` | `hsl(H, 10%, 30%)` — 比 `--color-bg-3` 稍深的中性调 |
+
+
+---
+
+
+### 9.4 背景色 RGB 分量 BG_1_RGB / D_BG_2_RGB
+
+
+模板中多处使用 `rgba({{BG_1_RGB}}, 0.98)` 这种格式（Modal、深色输入框等），需要提供纯 RGB 数值（不含 `#`，用逗号分隔）。
+
+
+| 占位符 | 对应颜色 | 示例 |
+| :--- | :--- | :--- |
+| `{{BG_1_RGB}}` | `{{BG_1}}` 的 RGB 分量 | 若 BG_1 = `#f0f0f0`，则填 `240, 240, 240` |
+| `{{D_BG_2_RGB}}` | `{{D_BG_2}}` 的 RGB 分量 | 若 D_BG_2 = `#1e1e1e`，则填 `30, 30, 30` |
+
+
+**推导方法**：将对应十六进制颜色值转换为十进制 R、G、B，用逗号空格分隔，不加括号。
+
+
+---
+
+
+### 9.5 其他 RGB 分量 PRIMARY_RGB / ACCENT_RGB / D_ACCENT_RGB
+
+
+同 9.4 的规则，将对应颜色的十六进制转为 `R, G, B` 格式：
+
+
+| 占位符 | 对应颜色 |
+| :--- | :--- |
+| `{{PRIMARY_RGB}}` | `{{PRIMARY}}` 的 RGB 分量 |
+| `{{ACCENT_RGB}}` | `{{ACCENT}}` 的 RGB 分量 |
+| `{{D_ACCENT_RGB}}` | `{{D_ACCENT}}` 的 RGB 分量 |
+
+
+---
+
+
+### 9.6 强调色系 ACCENT / ACCENT_LIGHT / ACCENT_DARK
+
+
+`{{ACCENT}}` 用于成功状态、复选框选中、进度条等，应与主色区分但视觉协调。
+
+
+**推导规则**：
+- 主色为暖色（Hue 0–60 或 300–360）→ Accent 选补色或对比绿（如 `#4caf50`）
+- 主色为冷色蓝/紫（Hue 180–300）→ Accent 选青绿（如 `#00bcd4`）或暖绿（`#8bc34a`）
+- 主色为中性色（饱和度 < 15%）→ Accent = 主色的互补色方向，饱和度提高至 50%+
+- `{{ACCENT_LIGHT}}` = Accent 亮度 +15%
+- `{{ACCENT_DARK}}` = Accent 亮度 -15%
+- 深色模式规则同第 8 节：若 Accent L < 40%，深色模式下提升至 55–60%
